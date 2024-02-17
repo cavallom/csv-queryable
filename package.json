@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cavallom/csvq.git"
+    "url": "git+https://github.com/cavallom/csv-queryable.git"
   },
   "keywords": [
     "csv",
@@ -20,7 +20,7 @@
   "author": "Massimo Cavallo <m.cavallo@restful.it>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cavallom/csvq/issues"
+    "url": "https://github.com/cavallom/csv-queryable/issues"
   },
-  "homepage": "https://github.com/cavallom/csvq#readme"
+  "homepage": "https://github.com/cavallom/csv-queryable#readme"
 }
