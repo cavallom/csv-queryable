@@ -84,7 +84,7 @@ function selectFromCsvArray(csvArray, header, columns, where, limit) {
   });
 
   // map with returned colums
-  return csvArray.map(r => columns.map(i => r[header.indexOf(i)]));
+  return csvArray.map(r => columns.map(i => r[header.indexOf(i)])).slice(limit[0],limit[1]);
 }
 
 /**
