@@ -74,6 +74,11 @@ function selectFromCsvArray(csvArray, header, columns, where, limit) {
             return e;
           }
           break;
+        case '%%':          
+          if (e[header.indexOf(element[0])].search(element[2]) > -1) {
+            return e;
+          }
+          break;
       }          
     });
   });

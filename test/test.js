@@ -1,12 +1,12 @@
 const q = require('csv-queryable');
 const header = new Array("Index","Organization Id","Name","Website","Country","Description","Founded","Industry","Number of employees");
-const cols = new Array("Website","Country");
-const where = new Array(["Country","==","Marshall Islands"],["Founded","!=","2013"]);
+const cols = new Array("Name","Website","Country","Founded");
+const where = new Array(["Country","%%","Ital"],["Founded","==","1999"]);
 const limit = new Array(0,99);
 
 //console.log(q.itWorks());
 
-let a = q.csvMemorize('/Users/mcavallo/Desktop/dev/GitHub/csv-queryable/csv/organizations-10000.csv');
+let a = q.csvMemorize('/Users/mcavallo/Desktop/dev/GitHub/csv-queryable/csv/organizations-100000.csv');
 let b = q.selectFromArray(a, header, cols, where, limit);
 let c = q.csvArrayToJsonArray(b, cols, cols);
 
