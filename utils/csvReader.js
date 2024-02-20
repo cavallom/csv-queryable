@@ -71,14 +71,14 @@ function selectFromCsvArray(csvArray, header, columns, from, where, limit) {
   //      && e[header.indexOf("Website")].search('.com') > -1;
   // }).map(r => columns.map(i => r[header.indexOf(i)]));
 
-  let test = csvArray.map(r => columns.map(i => r[header.indexOf(i)]));
+  let test = csvArray.map(r => header.map(i => r[header.indexOf(i)]));
   let a = new Array();
   where.forEach(element => {
-    return test.filter(function(e) {
-      if (e[columns.indexOf(element[1])] == element[3]) {
-        a.push(e);
+    test = test.filter(function(e) {
+      if (e[header.indexOf(element[1])] == element[3]) {
+        //a.push(e);
+        return e;
       }
-      //return e[keyindex] == value;
     });
   });
 
@@ -87,7 +87,7 @@ function selectFromCsvArray(csvArray, header, columns, from, where, limit) {
   //   filtered.push(getFilteredJsonArray(test, columns, element[1], element[2], element[3]));
   // });
 
-  return a;
+  return test.map(r => columns.map(i => r[header.indexOf(i)]));
 }
 
 // function getFilteredJsonArray(array, columns, key, operator,value) {

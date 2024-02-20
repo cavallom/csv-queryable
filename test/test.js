@@ -1,7 +1,7 @@
 const q = require('csv-queryable');
 const header = new Array("Index","Organization Id","Name","Website","Country","Description","Founded","Industry","Number of employees");
 const cols = new Array("Website","Country");
-const where = new Array(["&&","Country","=","China"],["&&","Country","=","Chad"]);
+const where = new Array(["&&","Country","=","Marshall Islands"],["&&","Organization Id","=","f3B2e86f669AbA9"]);
 const limit = new Array(0,99);
 
 //console.log(q.itWorks());
