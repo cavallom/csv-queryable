@@ -1,15 +1,19 @@
 const q = require('csv-queryable');
 const header = new Array("Index","Organization Id","Name","Website","Country","Description","Founded","Industry","Number of employees");
 const cols = new Array("Website","Country");
+const where = new Array(["&&","Country","=","China"],["&&","Country","=","Chad"]);
+const limit = new Array(0,99);
 
 //console.log(q.itWorks());
 
-let a = q.csvMemorize('/Users/mcavallo/Desktop/dev/GitHub/csv-queryable/csv/organizations-500000.csv');
-let b = q.selectFromArray(a, header, cols, '', '');
+let a = q.csvMemorize('/Users/mcavallo/Desktop/dev/GitHub/csv-queryable/csv/organizations-1000.csv');
+let b = q.selectFromArray(a, header, cols, '', where, limit);
 let c = q.csvArrayToJsonArray(b, cols, cols);
 
+//this.getFilteredJsonArray(this.getFilteredJsonArray(test, columns, "Country", "China"), columns, "Website", "http://sharp.com/")
+
 console.log(c);
-console.log(c.length);
+console.log(JSON.parse(c).length);
 
 // console.log(q.select("camp1, camp2")
 // ("tabella1")

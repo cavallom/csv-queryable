@@ -19,8 +19,8 @@ function select(select, from, where, limit) {
     return result;
 }
 
-function selectFromArray(csvArray, header, columns, where, limit) {
-    return csvReader.selectFromCsvArray(csvArray,header,columns);
+function selectFromArray(csvArray, header, columns, from, where, limit) {
+    return csvReader.selectFromCsvArray(csvArray,header,columns, from, where, limit);
 }
 /**
  * Validates a CSV file and return true or false.
