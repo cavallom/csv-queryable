@@ -7,7 +7,7 @@ const limit = new Array(0,99);
 //console.log(q.itWorks());
 
 let a = q.csvMemorize('/Users/mcavallo/Desktop/dev/GitHub/csv-queryable/csv/organizations-1000.csv');
-let b = q.selectFromArray(a, header, cols, '', where, limit);
+let b = q.selectFromArray(a, header, cols, where, limit);
 let c = q.csvArrayToJsonArray(b, cols, cols);
 
 //this.getFilteredJsonArray(this.getFilteredJsonArray(test, columns, "Country", "China"), columns, "Website", "http://sharp.com/")

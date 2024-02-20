@@ -55,39 +55,21 @@ function csvArrayRowsToJson(csvArray, headersArray) {
   return JSON.stringify(jsonArray);
 
 }
-function selectFromCsvArray(csvArray, header, columns, from, where, limit) {
-  // let test = eval('csvArray.filter(function(e) {'
-  //   + 'return (e[header.indexOf(where[0][1])] where[0][3] where[0][3] || e[header.indexOf(where[1][1])] == where[1][3])'
-  //   + ' && e[header.indexOf("Website")].search(".com") > -1;'
-  //   + ' }).slice(limit[0],limit[1]).map(r => columns.map(i => r[header.indexOf(i)]));');
+function selectFromCsvArray(csvArray, header, columns, where, limit) {
 
-//   let test = csvArray.filter(function(e) {
-//     return (e[header.indexOf(where[0][1])] == where[0][3] || e[header.indexOf(where[1][1])] == where[1][3])
-//      && e[header.indexOf("Website")].search('.com') > -1;
-// }).map(r => columns.map(i => r[header.indexOf(i)]));
+  // map with filtering columns
+  csvArray.map(r => header.map(i => r[header.indexOf(i)]));
 
-  // let test = csvArray.filter(function(e) {
-  //     return (e[header.indexOf("Country")] == 'China' || e[header.indexOf("Country")] == 'Chad')
-  //      && e[header.indexOf("Website")].search('.com') > -1;
-  // }).map(r => columns.map(i => r[header.indexOf(i)]));
-
-  let test = csvArray.map(r => header.map(i => r[header.indexOf(i)]));
-  let a = new Array();
   where.forEach(element => {
-    test = test.filter(function(e) {
+    csvArray = csvArray.filter(function(e) {
       if (e[header.indexOf(element[1])] == element[3]) {
-        //a.push(e);
         return e;
       }
     });
   });
 
-  // let filtered = new Array();
-  // where.forEach(element => {
-  //   filtered.push(getFilteredJsonArray(test, columns, element[1], element[2], element[3]));
-  // });
-
-  return test.map(r => columns.map(i => r[header.indexOf(i)]));
+  // map with returned colums
+  return csvArray.map(r => columns.map(i => r[header.indexOf(i)]));
 }
 
 // function getFilteredJsonArray(array, columns, key, operator,value) {
