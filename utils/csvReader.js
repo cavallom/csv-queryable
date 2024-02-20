@@ -62,9 +62,19 @@ function selectFromCsvArray(csvArray, header, columns, where, limit) {
 
   where.forEach(element => {
     csvArray = csvArray.filter(function(e) {
-      if (e[header.indexOf(element[1])] == element[3]) {
-        return e;
-      }
+      switch(element[1])
+      {
+        case '==':
+          if (e[header.indexOf(element[0])] == element[2]) {
+            return e;
+          }
+          break;
+        case '!=':
+          if (e[header.indexOf(element[0])] != element[2]) {
+            return e;
+          }
+          break;
+      }          
     });
   });
 
@@ -72,12 +82,6 @@ function selectFromCsvArray(csvArray, header, columns, where, limit) {
   return csvArray.map(r => columns.map(i => r[header.indexOf(i)]));
 }
 
-// function getFilteredJsonArray(array, columns, key, operator,value) {
-//   return array.filter(function(e) {
-//     return e[columns.indexOf(key)] == value;
-//     //return e[keyindex] == value;
-//   });
-// }
 /**
  * @param {string} csvRows - csv rows
  * @param {separator} csvDelimiter - The csv delimiter
