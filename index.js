@@ -1,6 +1,17 @@
 const csvReader = require("./utils/csvReader");
-const q = require("./utils/query");
+const q = require("./utils/csv");
 const pjson = require('./package.json');
+
+let csv = new q.csv(
+    csvPath = '/Users/mcavallo/Desktop/dev/GitHub/csv-queryable/csv/organizations-100000.csv'
+    , csvDelimiter = ','
+    , ignoreEmptyRows = true
+    , csvArray = NaN
+    , header = NaN
+    , columns = NaN
+    , where = NaN
+    , limit = NaN
+    );
 
 /**
  * Just to check the success of the installation, also returns basic package information.
@@ -29,8 +40,8 @@ function selectFromArray(csvArray, header, columns, where, limit) {
  * @param {string} csvDelimiter - The CSV separator character, not mandatory. Default value = ','.
  * @param {boolean} ignoreEmptyRows - Non-mandatory parameter to handle the blank line at the end of the file.
  */
-function csvArrayToJsonArray(csvArray,header, cols){
-    let jrisultato = csvReader.csvArrayRowsToJson(csvArray.map(r => cols.map(i => r[header.indexOf(i)])), cols);
+function csvArrayToJsonArray(csvArray, columns){
+    let jrisultato = csvReader.csvArrayRowsToJson(csvArray.map(r => columns.map(i => r[columns.indexOf(i)])), columns);
     return jrisultato
 }
 function csvMemorize(csvFile, csvDelimiter = ',', ignoreEmptyRows = true) {
@@ -61,34 +72,5 @@ function csvMemorize(csvFile, csvDelimiter = ',', ignoreEmptyRows = true) {
     }
 }
 
-// function select(s){
-//     function from(f){
-//         function where(w){
-//             function limit(l){
-//                 return s + f + w + l;
-//             }
-//             return limit;
-//         }
-//         return where;
-//     }
-//     return from;
-// }
 
-function columns(s){
-    return 'SELECT ' + s;
-}
-
-function from(f){
-    return ' FROM ' + f;
-}
-
-function where(w){
-    return ' WHERE ' + w;
-}
-
-function limit(l){
-    return ' LIMIT ' + l;
-}
-
-
-module.exports = {itWorks, csvMemorize, columns, from, where, limit, select, csvArrayToJsonArray, selectFromArray}
+module.exports = {itWorks, csvMemorize, select, csvArrayToJsonArray, selectFromArray}
