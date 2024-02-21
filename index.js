@@ -32,7 +32,8 @@ memorize = function(csvPath, csvDelimiter, ignoreEmptyRows) {
         let csvrows = csvLines(csvPath);
 
         //bidimensional array check to find bad formatting csv
-        if (!Number.isInteger(csvrows.flat().length/csvrows.length))
+        if (!Number.isInteger(csvrows.flat().length/csvrows.length)
+            || csvrows.flat().length === csvrows.length)
         {
             throw new customError("The csv file has not passed formal validation!");
         }
