@@ -5,8 +5,6 @@ memorize = function(csvPath, csvDelimiter, ignoreEmptyRows) {
 
     const start = Date.now();
 
-    //const regex = new RegExp(/(".*?"|[^"${csvDelimiter}]+)(?=\s*${csvDelimiter}|\s*$)/g);
-
     const expression = `(".*?"|[^"${csvDelimiter}]+)(?=\\s*${csvDelimiter}|\\s*$)`;
     const regex = new RegExp(expression, 'g');
 
@@ -25,7 +23,6 @@ memorize = function(csvPath, csvDelimiter, ignoreEmptyRows) {
             }
         })
         .map(function (row) {
-            //return row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
             return row.match(regex);
         });
         
@@ -35,9 +32,9 @@ memorize = function(csvPath, csvDelimiter, ignoreEmptyRows) {
         let csvrows = csvLines(csvPath);
 
         //bidimensional array check to find bad formatting csv
-        if (!Number.isInteger(csvrows.flat()/csvrows.length))
+        if (!Number.isInteger(csvrows.flat().length/csvrows.length))
         {
-            throw new customError("The csv file has not passed formal validation");
+            throw new customError("The csv file has not passed formal validation!");
         }
 
         return csvrows;
