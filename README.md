@@ -30,12 +30,12 @@ Just to check the success of the installation, also returns basic package inform
 |  |  | No parameters are required |
 
 ```bash
-const csvqueryable = require('csv-csvqueryable');
+const csvqueryable = require('csv-queryable');
 console.log(csvqueryable.itWorks());
 
 #output : { json } > {
 #    "itWorks": "Yes, it works!",
-#    "package": "csv-csvqueryable",
+#    "package": "csv-queryable",
 #    "version": "1.0.1"
 #}
 ```
@@ -57,11 +57,11 @@ Loads a CSV file into memory and prepares it for query execution. If the file is
 # package inclusion
 const csvqueryable = require("csv-queryable");
 # definition of parameters
-const csvPath = 'path-to-local-csv-file';
+const csvFile = 'path-to-local-csv-file';
 const csvDelimiter = ','
 const ignoreEmptyRows = true;
 # call to the csv file reading function
-let load = csvqueryable.memorize(csvPath, csvDelimiter, ignoreEmptyRows);
+let load = csvqueryable.memorize(csvFile, csvDelimiter, ignoreEmptyRows);
 
 #output : queryable csv array
 ```
@@ -83,11 +83,11 @@ With the **select** function it is possible to filter and extract the loaded csv
 # package inclusion
 const csvqueryable = require("csv-queryable");
 # definition of the parameters for loading the csv file into memory
-const csvPath = 'path-to-local-csv-file';
+const csvFile = 'path-to-local-csv-file';
 const csvDelimiter = ','
 const ignoreEmptyRows = true;
 # call to the csv file loading function
-let load = csvqueryable.memorize(csvPath, csvDelimiter, ignoreEmptyRows);
+let load = csvqueryable.memorize(csvFile, csvDelimiter, ignoreEmptyRows);
 # definition of parameters for data extraction
 const header = new Array("Index","Organization Id","Name","Website","Country","Description","Founded");
 const columns = new Array("Name","Website","Country","Founded");
@@ -143,7 +143,7 @@ const limit = new Array(0,2);
 
 ## Performance considerations
 
-**csv-queryable** is designed and tested to quickly load and navigate even large csv files with millions of rows and many columns.
+**csv-queryable** is designed and tested to quickly load and navigate even large csv files with millions of rows and many columns. For even better performance, we recommend loading the csv files at the start of the work session, thus making them available for multiple queries.
 
 ## Comma-Separated Values (CSV)
 

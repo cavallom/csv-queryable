@@ -1,7 +1,7 @@
 {
   "name": "csv-queryable",
-  "version": "0.0.1",
-  "description": "Placeholder to keep the name of the package under development.",
+  "version": "1.0.1",
+  "description": "Loads a CSV file into memory, filter and extract data quickly. Output, even when reading millions of records, very fast and immediate. No dependency on additional packages.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
