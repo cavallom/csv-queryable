@@ -1,9 +1,14 @@
 
 const fs = require('node:fs');
 
-memorize = function(csvPath, ignoreEmptyRows) {    
+memorize = function(csvPath, csvDelimiter, ignoreEmptyRows) {    
 
     const start = Date.now();
+
+    //const regex = new RegExp(/(".*?"|[^"${csvDelimiter}]+)(?=\s*${csvDelimiter}|\s*$)/g);
+
+    const expression = `(".*?"|[^"${csvDelimiter}]+)(?=\\s*${csvDelimiter}|\\s*$)`;
+    const regex = new RegExp(expression, 'g');
 
     try
     {
@@ -20,7 +25,8 @@ memorize = function(csvPath, ignoreEmptyRows) {
             }
         })
         .map(function (row) {
-            return row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
+            //return row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
+            return row.match(regex);
         });
         
         const end = Date.now();
