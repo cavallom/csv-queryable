@@ -151,4 +151,4 @@ const limit = new Array(0,2);
 
 ## License
 
-[MIT](https://opensource.org/license/mit/)
+[MIT](https://opensource.org/blog/license/mit)
