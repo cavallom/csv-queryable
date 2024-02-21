@@ -2,11 +2,23 @@ const csvReader = require("./utils/csvReader");
 const q = require("./utils/csv");
 const pjson = require('./package.json');
 
+let organizations;
+let csvtest = new q.csv(
+    csvPath = NaN
+    , csvDelimiter = NaN
+    , ignoreEmptyRows = NaN
+    , csvArray = NaN
+    , header = NaN
+    , columns = NaN
+    , where = NaN
+    , limit = NaN
+    );
+
 let csv = new q.csv(
     csvPath = '/Users/mcavallo/Desktop/dev/GitHub/csv-queryable/csv/organizations-100000.csv'
     , csvDelimiter = ','
     , ignoreEmptyRows = true
-    , csvArray = NaN
+    , csvArray = organizations
     , header = NaN
     , columns = NaN
     , where = NaN
@@ -73,4 +85,4 @@ function csvMemorize(csvFile, csvDelimiter = ',', ignoreEmptyRows = true) {
 }
 
 
-module.exports = {itWorks, csvMemorize, select, csvArrayToJsonArray, selectFromArray}
+module.exports = {itWorks, csvMemorize, select, csvArrayToJsonArray, selectFromArray, csvtest}

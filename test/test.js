@@ -2,7 +2,7 @@ const q = require('csv-queryable');
 const header = new Array("Index","Organization Id","Name","Website","Country","Description","Founded","Industry","Number of employees");
 const columns = new Array("Name","Website","Country","Founded");
 const where = new Array(["Country","%%","Ital"],["Founded","!=","1999"]);
-const limit = new Array(1,500);
+const limit = new Array(1,2);
 
 //console.log(q.itWorks());
 
@@ -16,3 +16,4 @@ const end = Date.now();
 console.log(c);
 console.log(JSON.parse(c).length);
 console.log("executiontime: " + `${(end - start)}ms.`);
+
