@@ -1,7 +1,15 @@
 
 const fs = require('node:fs');
+const pjson = require('./package.json');
 
-memorize = function(csvPath, csvDelimiter, ignoreEmptyRows) {    
+itWorks = function() {
+    return JSON.stringify({"itWorks": "Yes, it works!"
+    , "package": pjson.name
+    , "version": pjson.version
+    });
+}
+
+memorize = function(csvFile, csvDelimiter = ',', ignoreEmptyRows = true) {    
 
     const start = Date.now();
 
@@ -10,9 +18,9 @@ memorize = function(csvPath, csvDelimiter, ignoreEmptyRows) {
 
     try
     {
-        const csvLines = csvPath =>
+        const csvLines = csvFile =>
         fs
-        .readFileSync(csvPath)
+        .readFileSync(csvFile)
         .toString('UTF8')
         .split('\n')
         .filter(function (el) {
@@ -29,7 +37,7 @@ memorize = function(csvPath, csvDelimiter, ignoreEmptyRows) {
         const end = Date.now();
         console.log("executiontime: " + `${(end - start)}ms.`);
 
-        let csvrows = csvLines(csvPath);
+        let csvrows = csvLines(csvFile);
 
         //bidimensional array check to find bad formatting csv
         if (!Number.isInteger(csvrows.flat().length/csvrows.length)
@@ -106,4 +114,4 @@ customError = function(message = "") {
 } 
 customError.prototype = Error.prototype;
 
-module.exports = { memorize, select };
+module.exports = { itWorks, memorize, select };
