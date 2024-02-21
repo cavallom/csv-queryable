@@ -32,7 +32,15 @@ memorize = function(csvPath, csvDelimiter, ignoreEmptyRows) {
         const end = Date.now();
         console.log("executiontime: " + `${(end - start)}ms.`);
 
-        return csvLines(csvPath);
+        let csvrows = csvLines(csvPath);
+
+        //bidimensional array check to find bad formatting csv
+        if (!Number.isInteger(csvrows.flat()/csvrows.length))
+        {
+            throw new customError("The csv file has not passed formal validation");
+        }
+
+        return csvrows;
 
     } catch (error) {
         const end = Date.now();
@@ -93,5 +101,11 @@ select = function(csvArray, header, columns, where, limit) {
         console.log(error.message)
     }
 }
+
+customError = function(message = "") { 
+    this.message = message; 
+    this.name = "customError"; 
+} 
+customError.prototype = Error.prototype;
 
 module.exports = { memorize, select };
