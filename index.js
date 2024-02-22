@@ -1,12 +1,21 @@
 
 const fs = require('node:fs');
 const pjson = require('./package.json');
+let defaultlimit = new Array(0,1000);
 
 itWorks = function() {
     return JSON.stringify({"itWorks": "Yes, it works!"
     , "package": pjson.name
     , "version": pjson.version
     });
+}
+
+getLimit = function() {
+    return defaultlimit;
+}
+
+setLimit = function(newDefaultlimit) {
+    defaultlimit = newDefaultlimit;
 }
 
 memorize = function(csvFile, csvDelimiter = ',', ignoreEmptyRows = true) {    
@@ -60,7 +69,7 @@ memorize = function(csvFile, csvDelimiter = ',', ignoreEmptyRows = true) {
     }
 }
 
-select = function(csvArray, header = [], columns = header, where = [], limit = [1,5]) {
+select = function(csvArray, header = [], columns = header, where = [], limit = defaultlimit) {
 
     const start = Date.now();
 
@@ -68,7 +77,7 @@ select = function(csvArray, header = [], columns = header, where = [], limit = [
         header = csvArray[0];
         columns = columns.length > 0 ? columns : header;
     }
-//.slice(limit ? limit[0] : 0, limit ? limit[1] : 1000)
+
     try
     {
         where.forEach(element => {
@@ -125,4 +134,4 @@ customError = function(message = "") {
 } 
 customError.prototype = Error.prototype;
 
-module.exports = { itWorks, memorize, select };
+module.exports = { itWorks, memorize, select, setLimit, getLimit };
