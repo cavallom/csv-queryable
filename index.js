@@ -60,7 +60,7 @@ memorize = function(csvFile, csvDelimiter = ',', ignoreEmptyRows = true) {
     }
 }
 
-select = function(csvArray, header, columns, where, limit) {
+select = function(csvArray, header, columns, where, limit = [,]) {
 
     const start = Date.now();
 
@@ -90,7 +90,8 @@ select = function(csvArray, header, columns, where, limit) {
         });
     
         // map with returned colums
-        csvArray = csvArray.map(r => columns.map(i => r[header.indexOf(i)])).slice(limit[0], limit[1]);
+        csvArray = csvArray.map(r => columns.map(i => r[header.indexOf(i)]))
+        .slice(limit[0], limit[1]);
     
         // JSON output
         const csvArrayToJson = (rows) => {  
