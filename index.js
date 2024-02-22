@@ -60,10 +60,15 @@ memorize = function(csvFile, csvDelimiter = ',', ignoreEmptyRows = true) {
     }
 }
 
-select = function(csvArray, header, columns = header, where = [], limit = [,2]) {
+select = function(csvArray, header = [], columns = header, where = [], limit = [1,5]) {
 
     const start = Date.now();
 
+    if (header.length == 0) {
+        header = csvArray[0];
+        columns = columns.length > 0 ? columns : header;
+    }
+//.slice(limit ? limit[0] : 0, limit ? limit[1] : 1000)
     try
     {
         where.forEach(element => {
