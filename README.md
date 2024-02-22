@@ -9,6 +9,9 @@ The creation of this package written in **JavaScript** comes from the need to cr
     - [memorize](#memorize)
     - [select](#select)
       - [Select syntax examples](#select-syntax-examples)
+      - [Select with not mandatory params](#select-with-not-mandatory-params)
+    - [getLimit](#getlimit)
+    - [setLimit](#setlimit)
   - [Performance considerations](#performance-considerations)
   - [Comma-Separated Values (CSV)](#comma-separated-values-csv)
   - [License](#license)
@@ -25,9 +28,9 @@ npm i csv-queryable
 
 Just to check the success of the installation, also returns basic package information.
 
-| Param | Type | Description |
-| ----- | ---- | ----------- |
-|  |  | No parameters are required |
+| Param | Type | Mandatory | Description |
+| ----- | ---- | ----------- | --------- |
+|  |  |  | No parameters are required |
 
 ```bash
 const csvqueryable = require('csv-queryable');
@@ -36,7 +39,7 @@ console.log(csvqueryable.itWorks());
 #output : { json } > {
 #    "itWorks": "Yes, it works!",
 #    "package": "csv-queryable",
-#    "version": "1.0.1"
+#    "version": "1.0.3"
 #}
 ```
 
@@ -46,11 +49,11 @@ console.log(csvqueryable.itWorks());
 
 Loads a CSV file into memory and prepares it for query execution. If the file is not formally correct the function returns an error message. Please refer to the RCF 4180 directives which document the format used for Comma-Separated Values ​​(CSV) of the associated MIME type "text/csv". Below is the link to the csv specifications: [Comma-Separated Values (CSV)](#comma-separated-values-csv)
 
-| Param | Type | Description |
-| ----- | ---- | ----------- |
-| csvFile | string | Path to local CSV file |
-| csvDelimiter | string | The CSV delimiter character, not mandatory. Default value = ',' |
-| ignoreEmptyRows | bool | Non-mandatory parameter to handle the blank line at the end of the file. Default value = true |
+| Param | Type | Mandatory | Description |
+| ----- | ---- | ----------- | --------- |
+| csvFile | string | true | Path to local CSV file |
+| csvDelimiter | string | false | The CSV delimiter character |
+| ignoreEmptyRows | bool | false |Parameter to handle the blank lines |
 
 ```bash
 # call example
@@ -70,13 +73,13 @@ let load = csvqueryable.memorize(csvFile, csvDelimiter, ignoreEmptyRows);
 
 With the **select** function it is possible to filter and extract the loaded csv data. Further on in the section [Select syntax examples](#select-syntax-examples) some examples of conditional extraction with the explanation of the syntax. The output, even when reading millions of records, is very fast and immediate.
 
-| Param | Type | Description |
-| ----- | ---- | ----------- |
-| csvArray | Array[][] | A queryable csv array loaded with the **memorize** function |
-| header | Array of strings | Defines the column names of the csv file |
-| columns | Array of strings | Defines the columns that will be returned by the query |
-| where | Array of strings | Defines the data extraction rules that will be used by the query |
-| limit | Array of integer | Used as in SQL queries to limit row extraction |
+| Param | Type | Mandatory | Description |
+| ----- | ---- | ----------- | --------- |
+| csvArray | Array[][] | true | A queryable csv array loaded with the **memorize** function |
+| header | Array of strings | false | Defines the column names of the csv file |
+| columns | Array of strings | false | Defines the columns that will be returned by the query |
+| where | Array of strings | false | Defines the data extraction rules that will be used by the query |
+| limit | Array of integer | false | Used as in SQL queries to limit row extraction |
 
 ```bash
 # call example
@@ -139,6 +142,60 @@ const limit = new Array(0,2);
 #        "Founded": "2009"
 #    }
 #]
+```
+
+#### Select with not mandatory params
+
+Here are some examples of calling the select function excluding the optional parameters. The following data extraction logics should be taken into consideration:
+* in the absence of the **limit** parameter, the default ones will be used. In section [setLimit](#setlimit) the instructions on how to set the default limit
+* in the absence of the **columns** parameter all columns will be returned (*)
+* in the absence of the **header** parameter the first line of the csv file will be used as the header, not recommended in the absence of headers in the csv file
+* it has been decided not to use function overriding for now
+
+```bash
+# call example
+# call to the csv file reading function just passing the loaded csv
+let output = csvqueryable.select(load);
+# call to the csv file reading function passing the loaded csv and columns header array
+let output = csvqueryable.select(load, header);
+# call to the csv file reading function passing the loaded csv, columns header array and selected columns
+let output = csvqueryable.select(load, header, colums);
+# call to the csv file reading function passing the loaded csv, columns header array, selected columns and where condition
+let output = csvqueryable.select(load, header, colums, where);
+# call to the csv file reading function passing the loaded csv, columns header array, selected columns, where condition and limit
+let output = csvqueryable.select(load, header, colums, where, limit);
+# call to the csv file reading function passing the loaded csv, selected columns and limit
+let output = csvqueryable.select(load, undefinited, colums, undefinited, limit);
+```
+
+### getLimit
+
+Returns the default **select limit** used when the parameter is not passed to the function.
+
+| Param | Type | Mandatory | Description |
+| ----- | ---- | ----------- | --------- |
+|  |  |  | No parameters are required |
+
+```bash
+const csvqueryable = require('csv-queryable');
+let l = csvqueryable.getLimit();
+
+#output : [ 1, 6 ]
+```
+
+### setLimit
+
+Sets runtime the default **select limit** used when the parameter is not passed to the function.
+
+| Param | Type | Mandatory | Description |
+| ----- | ---- | ----------- | --------- |
+| limit | [ int ][ int ] | true | the default selection limit array |
+
+```bash
+const csvqueryable = require('csv-queryable');
+csvqueryable.setLimit([1,6]);
+
+#output : void
 ```
 
 ## Performance considerations
