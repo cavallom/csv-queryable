@@ -48,7 +48,7 @@ Loads a CSV file into memory and prepares it for query execution. If the file is
 
 | Param | Type | Description |
 | ----- | ---- | ----------- |
-| csvFile | string | Path to the CSV file |
+| csvFile | string | Path to local CSV file |
 | csvDelimiter | string | The CSV delimiter character, not mandatory. Default value = ',' |
 | ignoreEmptyRows | bool | Non-mandatory parameter to handle the blank line at the end of the file. Default value = true |
 
