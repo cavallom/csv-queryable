@@ -60,7 +60,7 @@ memorize = function(csvFile, csvDelimiter = ',', ignoreEmptyRows = true) {
     }
 }
 
-select = function(csvArray, header, columns, where, limit = [,]) {
+select = function(csvArray, header, columns = header, where = [], limit = [,2]) {
 
     const start = Date.now();
 
