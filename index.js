@@ -1,32 +1,86 @@
 
 const fs = require('node:fs');
 const pjson = require('./package.json');
-let defaultlimit = new Array(0,1000);
+
+let defaultLimit = new Array(0,1000);
 
 itWorks = function() {
-    return JSON.stringify({"itWorks": "Yes, it works!"
-    , "package": pjson.name
-    , "version": pjson.version
-    });
+    
+    const start = Date.now();
+
+    try{
+        
+        return JSON.stringify({"itWorks": "Yes, it works!"
+        , "package": pjson.name
+        , "version": pjson.version
+        });
+
+    } catch (error) {
+        
+        const end = Date.now();
+
+        throw new csv_queryable_Error(
+            'itWorks'
+            , `${(end - start)}ms.`
+            , error.message);
+
+    }
+
 }
 
 getLimit = function() {
-    return defaultlimit;
+
+    const start = Date.now();
+
+    try
+    {
+        
+        return defaultLimit;
+    
+    } catch (error) {
+        
+        const end = Date.now();
+
+        throw new csv_queryable_Error(
+            'getLimit'
+            , `${(end - start)}ms.`
+            , error.message);
+
+    }
+
 }
 
-setLimit = function(newDefaultlimit) {
-    defaultlimit = newDefaultlimit;
+setLimit = function(newdefaultLimit) {
+    
+    const start = Date.now();
+
+    try
+    {
+        
+        defaultLimit = newdefaultLimit;
+    
+    } catch (error) {
+        
+        const end = Date.now();
+
+        throw new csv_queryable_Error(
+            'setLimit'
+            , `${(end - start)}ms.`
+            , error.message);
+
+    }
 }
 
 memorize = function(csvFile, csvDelimiter = ',', ignoreEmptyRows = true) {    
 
     const start = Date.now();
 
-    const expression = `(".*?"|[^"${csvDelimiter}]+)(?=\\s*${csvDelimiter}|\\s*$)`;
-    const regex = new RegExp(expression, 'g');
-
     try
     {
+        
+        const expression = `(".*?"|[^"${csvDelimiter}]+)(?=\\s*${csvDelimiter}|\\s*$)`;
+        const regex = new RegExp(expression, 'g');
+    
         const csvLines = csvFile =>
         fs
         .readFileSync(csvFile)
@@ -49,7 +103,6 @@ memorize = function(csvFile, csvDelimiter = ',', ignoreEmptyRows = true) {
         });
         
         const end = Date.now();
-        console.log("executiontime: " + `${(end - start)}ms.`);
 
         let csvrows = csvLines(csvFile);
 
@@ -57,29 +110,42 @@ memorize = function(csvFile, csvDelimiter = ',', ignoreEmptyRows = true) {
         if (!Number.isInteger(csvrows.flat().length/csvrows.length)
             || csvrows.flat().length === csvrows.length)
         {
-            throw new customError("The csv file has not passed formal validation!");
+
+            const end = Date.now();
+
+            throw new csv_queryable_Error(
+                'memorize'
+                , `${(end - start)}ms.`
+                , "The csv file has not passed formal validation!");
+                
         }
 
         return csvrows;
 
     } catch (error) {
+        
         const end = Date.now();
-        console.log("executiontime: " + `${(end - start)}ms.`);
-        console.log(error.message)
+
+        throw new csv_queryable_Error(
+            'memorize'
+            , `${(end - start)}ms.`
+            , error.message);
+
     }
 }
 
-select = function(csvArray, header = [], columns = header, where = [], limit = defaultlimit) {
+select = function(csvArray, header = [], columns = header, where = [], limit = defaultLimit) {
 
     const start = Date.now();
 
-    if (header.length == 0) {
-        header = csvArray[0];
-        columns = columns.length > 0 ? columns : header;
-    }
-
     try
     {
+        
+        if (header.length == 0) {
+            header = csvArray[0];
+            columns = columns.length > 0 ? columns : header;
+        }
+    
         where.forEach(element => {
             csvArray = csvArray.filter(function(e) {
                 switch(element[1])
@@ -122,16 +188,23 @@ select = function(csvArray, header = [], columns = header, where = [], limit = d
         return JSON.stringify(csvJsonArray);
 
     } catch (error) {
+        
         const end = Date.now();
-        console.log("executiontime: " + `${(end - start)}ms.`);
-        console.log(error.message)
+
+        throw new csv_queryable_Error(
+            'select'
+            , `${(end - start)}ms.`
+            , error.message);
+
     }
 }
 
-customError = function(message = "") { 
+csv_queryable_Error = function(routine = "", executiontime = "", message = "") { 
+    this.routine = routine;
+    this.executiontime = executiontime; 
     this.message = message; 
-    this.name = "customError"; 
+    this.name = "csv_queryable_Error"; 
 } 
-customError.prototype = Error.prototype;
+csv_queryable_Error.prototype = Error.prototype;
 
 module.exports = { itWorks, memorize, select, setLimit, getLimit };

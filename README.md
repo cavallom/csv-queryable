@@ -189,7 +189,7 @@ Sets runtime the default **select limit** used when the parameter is not passed 
 
 | Param | Type | Mandatory | Description |
 | ----- | ---- | ----------- | --------- |
-| limit | [ int ][ int ] | true | the default selection limit array |
+| limit | [ int ][ int ] | true | The default select limit array |
 
 ```bash
 const csvqueryable = require('csv-queryable');
